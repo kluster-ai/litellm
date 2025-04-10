@@ -843,34 +843,28 @@ def completion_cost(  # noqa: PLR0915
                             text=completion_string
                         )
 
-                # Handle klusterai cost calculation like other providers
-                if custom_llm_provider == "klusterai":
-                    (
-                        prompt_tokens_cost_usd_dollar,
-                        completion_tokens_cost_usd_dollar,
-                    ) = klusterai_cost_per_token(model=model, usage=cost_per_token_usage_object)
-                else:
-                    (
-                        prompt_tokens_cost_usd_dollar,
-                        completion_tokens_cost_usd_dollar,
-                    ) = cost_per_token(
-                        model=model,
-                        prompt_tokens=prompt_tokens,
-                        completion_tokens=completion_tokens,
-                        custom_llm_provider=custom_llm_provider,
-                        response_time_ms=total_time,
-                        region_name=region_name,
-                        custom_cost_per_second=custom_cost_per_second,
-                        custom_cost_per_token=custom_cost_per_token,
-                        prompt_characters=prompt_characters,
-                        completion_characters=completion_characters,
-                        cache_creation_input_tokens=cache_creation_input_tokens,
-                        cache_read_input_tokens=cache_read_input_tokens,
-                        usage_object=cost_per_token_usage_object,
-                        call_type=cast(CallTypesLiteral, call_type),
-                        audio_transcription_file_duration=audio_transcription_file_duration,
-                        rerank_billed_units=rerank_billed_units,
-                    )
+
+                (
+                    prompt_tokens_cost_usd_dollar,
+                    completion_tokens_cost_usd_dollar,
+                ) = cost_per_token(
+                    model=model,
+                    prompt_tokens=prompt_tokens,
+                    completion_tokens=completion_tokens,
+                    custom_llm_provider=custom_llm_provider,
+                    response_time_ms=total_time,
+                    region_name=region_name,
+                    custom_cost_per_second=custom_cost_per_second,
+                    custom_cost_per_token=custom_cost_per_token,
+                    prompt_characters=prompt_characters,
+                    completion_characters=completion_characters,
+                    cache_creation_input_tokens=cache_creation_input_tokens,
+                    cache_read_input_tokens=cache_read_input_tokens,
+                    usage_object=cost_per_token_usage_object,
+                    call_type=cast(CallTypesLiteral, call_type),
+                    audio_transcription_file_duration=audio_transcription_file_duration,
+                    rerank_billed_units=rerank_billed_units,
+                )
                 _final_cost = (
                     prompt_tokens_cost_usd_dollar + completion_tokens_cost_usd_dollar
                 )
