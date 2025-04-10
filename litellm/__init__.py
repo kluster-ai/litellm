@@ -48,6 +48,7 @@ from litellm.constants import (
     huggingface_models,
     empower_models,
     together_ai_models,
+    klusterai_models,
     baseten_models,
     REPEATED_STREAMING_CHUNK_LIMIT,
     request_timeout,
@@ -185,6 +186,7 @@ vertex_project: Optional[str] = None
 vertex_location: Optional[str] = None
 predibase_tenant_id: Optional[str] = None
 togetherai_api_key: Optional[str] = None
+klusterai_api_key: Optional[str] = None
 cloudflare_api_key: Optional[str] = None
 baseten_key: Optional[str] = None
 aleph_alpha_key: Optional[str] = None
@@ -415,6 +417,7 @@ galadriel_models: List = []
 sambanova_models: List = []
 assemblyai_models: List = []
 snowflake_models: List = []
+klusterai_models: List = []
 
 
 def is_bedrock_pricing_only_model(key: str) -> bool:
@@ -570,6 +573,8 @@ def add_known_models():
             jina_ai_models.append(key)
         elif value.get("litellm_provider") == "snowflake":
             snowflake_models.append(key)
+        elif value.get("litellm_provider") == "klusterai":
+            klusterai_models.append(key)
 
 
 add_known_models()
@@ -661,6 +666,7 @@ models_by_provider: dict = {
     "replicate": replicate_models,
     "huggingface": huggingface_models,
     "together_ai": together_ai_models,
+    "klusterai": klusterai_models,
     "baseten": baseten_models,
     "openrouter": openrouter_models,
     "vertex_ai": vertex_chat_models
@@ -829,6 +835,11 @@ from .llms.ai21.chat.transformation import AI21ChatConfig, AI21ChatConfig as AI2
 from .llms.anthropic.experimental_pass_through.messages.transformation import (
     AnthropicMessagesConfig,
 )
+from .llms.klusterai.chat.handler import KlusterAIChatCompletion
+from .llms.klusterai.chat.transformation import KlusterAIConfig
+from .llms.klusterai.common_utils import KlusterAIException, KlusterAIMixin
+from .llms.klusterai.cost_calculator import cost_per_token as klusterai_cost_per_token
+
 from .llms.together_ai.chat import TogetherAIConfig
 from .llms.together_ai.completion.transformation import TogetherAITextCompletionConfig
 from .llms.cloudflare.chat.transformation import CloudflareChatConfig

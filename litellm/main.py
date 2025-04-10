@@ -142,6 +142,7 @@ from .llms.databricks.embed.handler import DatabricksEmbeddingHandler
 from .llms.deprecated_providers import aleph_alpha, palm
 from .llms.groq.chat.handler import GroqChatCompletion
 from .llms.huggingface.embedding.handler import HuggingFaceEmbedding
+from .llms.klusterai.chat.handler import KlusterAIChatCompletion
 from .llms.nlp_cloud.chat.handler import completion as nlp_cloud_chat_completion
 from .llms.ollama.completion import handler as ollama
 from .llms.oobabooga.chat import oobabooga
@@ -243,6 +244,7 @@ databricks_embedding = DatabricksEmbeddingHandler()
 base_llm_http_handler = BaseLLMHTTPHandler()
 base_llm_aiohttp_handler = BaseLLMAIOHTTPHandler()
 sagemaker_chat_completion = SagemakerChatHandler()
+klusterai_chat_completion = KlusterAIChatCompletion()
 ####### COMPLETION ENDPOINTS ################
 
 
@@ -1687,6 +1689,7 @@ def completion(  # type: ignore # noqa: PLR0915
             or custom_llm_provider == "mistral"
             or custom_llm_provider == "openai"
             or custom_llm_provider == "together_ai"
+            or custom_llm_provider == "klusterai"
             or custom_llm_provider in litellm.openai_compatible_providers
             or "ft:gpt-3.5-turbo" in model  # finetune gpt-3.5-turbo
         ):  # allow user to make an openai call with a custom base
@@ -2311,6 +2314,65 @@ def completion(  # type: ignore # noqa: PLR0915
             logging.post_call(
                 input=messages, api_key=openai.api_key, original_response=response
             )
+        elif custom_llm_provider == "klusterai":
+            api_base = (
+                api_base  # for klusterai we check in get_llm_provider and pass in the api base from there
+                or litellm.api_base
+                or get_secret("KLUSTERAI_API_BASE")
+                or "https://api.kluster.ai/v1"
+            )
+            # set API KEY
+            api_key = (
+                api_key
+                or litellm.api_key  # for klusterai we check in get_llm_provider and pass in the api key from there
+                or litellm.klusterai_key
+                or get_secret("KLUSTERAI_API_KEY")
+            )
+
+            headers = headers or litellm.headers
+
+            if extra_headers is not None:
+                optional_params["extra_headers"] = extra_headers
+
+            ## COMPLETION CALL
+            try:
+                response = base_llm_http_handler.completion(
+                    model=model,
+                    messages=messages,
+                    headers=headers,
+                    model_response=model_response,
+                    print_verbose=print_verbose,
+                    api_key=api_key,
+                    api_base=api_base,
+                    acompletion=acompletion,
+                    logging_obj=logging,
+                    optional_params=optional_params,
+                    litellm_params=litellm_params,
+                    logger_fn=logger_fn,
+                    timeout=timeout,  # type: ignore
+                    client=client,  # pass AsyncOpenAI, OpenAI client
+                    custom_llm_provider=custom_llm_provider,
+                    encoding=encoding,
+                    stream=stream,
+                )
+            except Exception as e:
+                ## LOGGING - log the original exception returned
+                logging.post_call(
+                    input=messages,
+                    api_key=api_key,
+                    original_response=str(e),
+                    additional_args={"headers": headers},
+                )
+                raise e
+
+            if optional_params.get("stream", False):
+                ## LOGGING
+                logging.post_call(
+                    input=messages,
+                    api_key=api_key,
+                    original_response=response,
+                    additional_args={"headers": headers},
+                )
         elif (
             custom_llm_provider == "together_ai"
             or ("togethercomputer" in model)
@@ -3475,6 +3537,7 @@ def embedding(  # noqa: PLR0915
             model in litellm.open_ai_embedding_models
             or custom_llm_provider == "openai"
             or custom_llm_provider == "together_ai"
+            or custom_llm_provider == "klusterai"
             or custom_llm_provider == "nvidia_nim"
             or custom_llm_provider == "litellm_proxy"
         ):

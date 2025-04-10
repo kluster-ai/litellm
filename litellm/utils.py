@@ -59,6 +59,7 @@ import litellm.litellm_core_utils.audio_utils.utils
 import litellm.litellm_core_utils.json_validation_rule
 import litellm.llms
 import litellm.llms.gemini
+import litellm.llms.klusterai
 from litellm.caching._internal_lru_cache import lru_cache_wrapper
 from litellm.caching.caching import DualCache
 from litellm.caching.caching_handler import CachingHandlerResponse, LLMCachingHandler
@@ -490,7 +491,6 @@ def get_dynamic_callbacks(
     if dynamic_callbacks:
         returned_callbacks.extend(dynamic_callbacks)  # type: ignore
     return returned_callbacks
-
 
 def function_setup(  # noqa: PLR0915
     original_function: str, rules_obj, start_time, *args, **kwargs
@@ -2980,6 +2980,7 @@ def get_optional_params(  # noqa: PLR0915
             and custom_llm_provider != "vertex_ai"
             and custom_llm_provider != "anyscale"
             and custom_llm_provider != "together_ai"
+            and custom_llm_provider != "klusterai"
             and custom_llm_provider != "groq"
             and custom_llm_provider != "nvidia_nim"
             and custom_llm_provider != "cerebras"
@@ -3238,6 +3239,17 @@ def get_optional_params(  # noqa: PLR0915
         )
     elif custom_llm_provider == "together_ai":
         optional_params = litellm.TogetherAIConfig().map_openai_params(
+            non_default_params=non_default_params,
+            optional_params=optional_params,
+            model=model,
+            drop_params=(
+                drop_params
+                if drop_params is not None and isinstance(drop_params, bool)
+                else False
+            ),
+        )
+    elif custom_llm_provider == "klusterai":
+        optional_params = litellm.KlusterAIConfig().map_openai_params(
             non_default_params=non_default_params,
             optional_params=optional_params,
             model=model,
@@ -4111,6 +4123,12 @@ def get_api_key(llm_provider: str, dynamic_api_key: Optional[str]):
             or litellm.togetherai_api_key
             or get_secret("TOGETHERAI_API_KEY")
             or get_secret("TOGETHER_AI_TOKEN")
+        )
+    elif llm_provider == "klusterai":
+        api_key = (
+            api_key
+            or get_secret("KLUSTERAI_API_KEY")
+            or get_secret("KLUSTERAI_TOKEN")
         )
     return api_key
 
@@ -4999,6 +5017,11 @@ def validate_environment(  # noqa: PLR0915
                 keys_in_environment = True
             else:
                 missing_keys.append("TOGETHERAI_API_KEY")
+        elif custom_llm_provider == "klusterai":
+            if "KLUSTERAI_API_KEY" in os.environ:
+                keys_in_environment = True
+            else:
+                missing_keys.append("KLUSTERAI_API_KEY")
         elif custom_llm_provider == "aleph_alpha":
             if "ALEPH_ALPHA_API_KEY" in os.environ:
                 keys_in_environment = True
@@ -5189,6 +5212,11 @@ def validate_environment(  # noqa: PLR0915
                 keys_in_environment = True
             else:
                 missing_keys.append("TOGETHERAI_API_KEY")
+        elif model in litellm.klusterai_models:
+            if "KLUSTERAI_API_KEY" in os.environ:
+                keys_in_environment = True
+            else:
+                missing_keys.append("KLUSTERAI_API_KEY")
         ## aleph_alpha
         elif model in litellm.aleph_alpha_models:
             if "ALEPH_ALPHA_API_KEY" in os.environ:
@@ -6304,6 +6332,8 @@ class ProviderConfigManager:
             return litellm.HuggingFaceChatConfig()
         elif litellm.LlmProviders.TOGETHER_AI == provider:
             return litellm.TogetherAIConfig()
+        elif litellm.LlmProviders.KLUSTER_AI == provider:
+            return litellm.KlusterAIConfig()
         elif litellm.LlmProviders.OPENROUTER == provider:
             return litellm.OpenrouterConfig()
         elif litellm.LlmProviders.GEMINI == provider:

@@ -39,6 +39,7 @@ from litellm.llms.fireworks_ai.cost_calculator import (
     cost_per_token as fireworks_ai_cost_per_token,
 )
 from litellm.llms.gemini.cost_calculator import cost_per_token as gemini_cost_per_token
+from litellm.llms.klusterai.cost_calculator import cost_per_token as klusterai_cost_per_token
 from litellm.llms.openai.cost_calculation import (
     cost_per_second as openai_cost_per_second,
 )
@@ -307,6 +308,8 @@ def cost_per_token(  # noqa: PLR0915
         )
     elif custom_llm_provider == "gemini":
         return gemini_cost_per_token(model=model, usage=usage_block)
+    elif custom_llm_provider == "klusterai":
+        return klusterai_cost_per_token(model=model, usage=usage_block)
     elif custom_llm_provider == "deepseek":
         return deepseek_cost_per_token(model=model, usage=usage_block)
     else:
@@ -539,7 +542,6 @@ def _infer_call_type(
         return "text_completion"
 
     return call_type
-
 
 def completion_cost(  # noqa: PLR0915
     completion_response=None,
@@ -840,6 +842,7 @@ def completion_cost(  # noqa: PLR0915
                         completion_characters = litellm.utils._count_characters(
                             text=completion_string
                         )
+
 
                 (
                     prompt_tokens_cost_usd_dollar,

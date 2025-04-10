@@ -857,6 +857,9 @@ class Usage(CompletionUsage):
                     cached_tokens=params["cache_read_input_tokens"]
                 )
 
+        ## KLUSTERAI MAPPING ##
+        # Handle any klusterai specific token mappings if needed
+
         # handle prompt_tokens_details
         _prompt_tokens_details: Optional[PromptTokensDetailsWrapper] = None
         if prompt_tokens_details:
@@ -2018,6 +2021,7 @@ class LlmProviders(str, Enum):
     REPLICATE = "replicate"
     HUGGINGFACE = "huggingface"
     TOGETHER_AI = "together_ai"
+    KLUSTER_AI = "klusterai"
     OPENROUTER = "openrouter"
     VERTEX_AI = "vertex_ai"
     VERTEX_AI_BETA = "vertex_ai_beta"
