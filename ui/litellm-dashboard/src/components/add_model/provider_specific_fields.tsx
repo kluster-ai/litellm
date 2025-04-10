@@ -327,6 +327,12 @@ const PROVIDER_CREDENTIAL_FIELDS: Record<Providers, ProviderCredentialField[]> =
     label: "API Key",
     type: "password",
     required: true
+  }],
+  [Providers.KlusterAI]: [{
+    key: "api_key",
+    label: "API Key",
+    type: "password",
+    required: true
   }]
 };
 
@@ -335,7 +341,7 @@ const ProviderSpecificFields: React.FC<ProviderSpecificFieldsProps> = ({
   uploadProps
 }) => {
   const selectedProviderEnum = Providers[selectedProvider as keyof typeof Providers] as Providers;
-  
+
   // Simply use the fields as defined in PROVIDER_CREDENTIAL_FIELDS
   const allFields = React.useMemo(() => {
     return PROVIDER_CREDENTIAL_FIELDS[selectedProviderEnum] || [];

@@ -216,6 +216,9 @@ def get_llm_provider(  # noqa: PLR0915
                     elif endpoint == "api.galadriel.com/v1":
                         custom_llm_provider = "galadriel"
                         dynamic_api_key = get_secret_str("GALADRIEL_API_KEY")
+                    elif endpoint == "api.kluster.ai/v1":
+                        custom_llm_provider = "klusterai"
+                        dynamic_api_key = get_secret_str("KLUSTER_AI_API_KEY")
 
                     if api_base is not None and not isinstance(api_base, str):
                         raise Exception(
@@ -555,6 +558,13 @@ def _get_openai_compatible_provider_info(  # noqa: PLR0915
             or get_secret_str("TOGETHERAI_API_KEY")
             or get_secret_str("TOGETHER_AI_TOKEN")
         )
+    elif custom_llm_provider == "klusterai":
+        api_base = (
+            api_base
+            or get_secret_str("KLUSTER_AI_API_BASE")
+            or "https://api.kluster.ai/v1"
+        )  # type: ignore
+        dynamic_api_key = api_key or get_secret_str("KLUSTER_AI_API_KEY")
     elif custom_llm_provider == "friendliai":
         api_base = (
             api_base

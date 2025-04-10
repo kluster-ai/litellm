@@ -25,10 +25,10 @@ export enum Providers {
     Perplexity = "Perplexity",
     TogetherAI = "TogetherAI",
     Openrouter = "Openrouter",
-    FireworksAI = "Fireworks AI"
-
+    FireworksAI = "Fireworks AI",
+    KlusterAI = "Kluster AI"
   }
-  
+
 export const provider_map: Record<string, string> = {
     OpenAI: "openai",
     OpenAI_Text: "text-completion-openai",
@@ -53,7 +53,8 @@ export const provider_map: Record<string, string> = {
     Perplexity: "perplexity",
     TogetherAI: "togetherai",
     Openrouter: "openrouter",
-    FireworksAI: "fireworks_ai"
+    FireworksAI: "fireworks_ai",
+    KlusterAI: "klusterai"
 };
 
 const asset_logos_folder = '/ui/assets/logos/';
@@ -71,6 +72,7 @@ export const providerLogoMap: Record<string, string> = {
     [Providers.FireworksAI]: `${asset_logos_folder}fireworks.svg`,
     [Providers.Groq]: `${asset_logos_folder}groq.svg`,
     [Providers.Google_AI_Studio]: `${asset_logos_folder}google.svg`,
+    [Providers.KlusterAI]: `${asset_logos_folder}klusterai.svg`,
     [Providers.MistralAI]: `${asset_logos_folder}mistral.svg`,
     [Providers.Ollama]: `${asset_logos_folder}ollama.svg`,
     [Providers.OpenAI]: `${asset_logos_folder}openai_small.svg`,
@@ -126,6 +128,8 @@ export const getPlaceholder = (selectedProvider: string): string => {
       return "azure_ai/command-r-plus";
     } else if (selectedProvider == Providers.Azure) {
       return "azure/my-deployment";
+    } else if (selectedProvider == Providers.KlusterAI) {
+      return "klusterai/yi-34b";
     } else {
       return "gpt-3.5-turbo";
     }
@@ -136,9 +140,9 @@ export const getPlaceholder = (selectedProvider: string): string => {
     console.log(`Provider key: ${providerKey}`);
     let custom_llm_provider = provider_map[providerKey];
     console.log(`Provider mapped to: ${custom_llm_provider}`);
-    
+
     let providerModels: Array<string> = [];
-    
+
     if (providerKey && typeof modelMap === "object") {
       Object.entries(modelMap).forEach(([key, value]) => {
         if (
@@ -151,7 +155,7 @@ export const getPlaceholder = (selectedProvider: string): string => {
           providerModels.push(key);
         }
       });
-  
+
       // Special case for cohere_chat
       // we need both cohere_chat and cohere models to show on dropdown
       if (providerKey == Providers.Cohere) {
@@ -168,6 +172,6 @@ export const getPlaceholder = (selectedProvider: string): string => {
         });
       }
     }
-  
+
     return providerModels;
   };

@@ -9223,6 +9223,128 @@
         "mode": "chat",
         "supports_tool_choice": true
     },
+    "kluster_ai/Meta-Llama-3.1-8B-Instruct-Turbo": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.00000018,
+        "output_cost_per_token": 0.00000018,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "kluster_ai/Meta-Llama-3.1-70B-Instruct-Turbo": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000007,
+        "output_cost_per_token": 0.0000007,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "kluster_ai/Meta-Llama-3.1-405B-Instruct-Turbo": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000035,
+        "output_cost_per_token": 0.0000035,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "kluster_ai/Meta-Llama-3.3-70B-Instruct-Turbo": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000007,
+        "output_cost_per_token": 0.0000007,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "kluster_ai/Llama-4-Maverick-17B-128E-Instruct-FP8": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000002,
+        "output_cost_per_token": 0.0000008,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "kluster_ai/Llama-4-Scout-17B-16E-Instruct": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000008,
+        "output_cost_per_token": 0.00000045,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "kluster_ai/deepseek-ai/DeepSeek-R1": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.000003,
+        "output_cost_per_token": 0.000005,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "kluster_ai/deepseek-ai/DeepSeek-V3": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000007,
+        "output_cost_per_token": 0.0000014,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "kluster_ai/deepseek-ai/DeepSeek-V3-0324": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000007,
+        "output_cost_per_token": 0.0000014,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "kluster_ai/google/gemma-3-27b-it": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.00000035,
+        "output_cost_per_token": 0.00000035,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "kluster_ai/Qwen/Qwen2.5-VL-7B-Instruct": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000003,
+        "output_cost_per_token": 0.0000003,
+        "litellm_provider": "kluster_ai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false,
+        "supports_vision": true
+    },    
     "ollama/codegemma": {
         "max_tokens": 8192, 
         "max_input_tokens": 8192, 
@@ -10840,5 +10962,118 @@
         "max_output_tokens": 8192,
         "litellm_provider": "snowflake",
         "mode": "chat"
+    },
+    "klusterai/klusterai/Meta-Llama-3.1-8B-Instruct-Turbo": {
+        "max_tokens": 131000,
+        "max_input_tokens": 131000,
+        "max_output_tokens": 131000,
+        "input_cost_per_token": 0.00000018,
+        "output_cost_per_token": 0.00000018,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "klusterai/klusterai/Meta-Llama-3.1-405B-Instruct-Turbo": {
+        "max_tokens": 131000,
+        "max_input_tokens": 131000,
+        "max_output_tokens": 131000,
+        "input_cost_per_token": 0.0000035,
+        "output_cost_per_token": 0.0000035,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "klusterai/klusterai/Meta-Llama-3.3-70B-Instruct-Turbo": {
+        "max_tokens": 131000,
+        "max_input_tokens": 131000,
+        "max_output_tokens": 131000,
+        "input_cost_per_token": 0.0000007,
+        "output_cost_per_token": 0.0000007,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true
+    },
+    "klusterai/meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8": {
+        "max_tokens": 1000000,
+        "max_input_tokens": 1000000,
+        "max_output_tokens": 1000000,
+        "input_cost_per_token": 0.0000002,
+        "output_cost_per_token": 0.0000008,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true,
+        "supports_vision": true
+    },
+    "klusterai/meta-llama/Llama-4-Scout-17B-16E-Instruct": {
+        "max_tokens": 131000,
+        "max_input_tokens": 131000,
+        "max_output_tokens": 131000,
+        "input_cost_per_token": 0.0000008,
+        "output_cost_per_token": 0.00000045,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": true,
+        "supports_tool_choice": true,
+        "supports_vision": true
+    },
+    "klusterai/deepseek-ai/DeepSeek-R1": {
+        "max_tokens": 164000,
+        "max_input_tokens": 164000,
+        "max_output_tokens": 164000,
+        "input_cost_per_token": 0.00000175,
+        "output_cost_per_token": 0.000005,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "klusterai/deepseek-ai/DeepSeek-V3": {
+        "max_tokens": 164000,
+        "max_input_tokens": 164000,
+        "max_output_tokens": 164000,
+        "input_cost_per_token": 0.00000125,
+        "output_cost_per_token": 0.00000125,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "klusterai/deepseek-ai/DeepSeek-V3-0324": {
+        "max_tokens": 164000,
+        "max_input_tokens": 164000,
+        "max_output_tokens": 164000,
+        "input_cost_per_token": 0.0000007,
+        "output_cost_per_token": 0.0000014,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "klusterai/google/gemma-3-27b-it": {
+        "max_tokens": 64000,
+        "max_input_tokens": 64000,
+        "max_output_tokens": 8000,
+        "input_cost_per_token": 0.00000035,
+        "output_cost_per_token": 0.00000035,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false
+    },
+    "klusterai/Qwen/Qwen2.5-VL-7B-Instruct": {
+        "max_tokens": 32000,
+        "max_input_tokens": 32000,
+        "max_output_tokens": 32000,
+        "input_cost_per_token": 0.0000003,
+        "output_cost_per_token": 0.0000003,
+        "litellm_provider": "klusterai",
+        "mode": "chat",
+        "supports_function_calling": false,
+        "supports_tool_choice": false,
+        "supports_vision": true
     }
 }

@@ -88,6 +88,7 @@ FIREWORKS_AI_176_B_MOE = 176
 FIREWORKS_AI_16_B = 16
 FIREWORKS_AI_80_B = 80
 
+
 LITELLM_CHAT_PROVIDERS = [
     "openai",
     "openai_like",
@@ -148,6 +149,7 @@ LITELLM_CHAT_PROVIDERS = [
     "hosted_vllm",
     "lm_studio",
     "galadriel",
+    "klusterai"
 ]
 
 
@@ -203,6 +205,7 @@ openai_compatible_endpoints: List = [
     "https://integrate.api.nvidia.com/v1",
     "api.deepseek.com/v1",
     "api.together.xyz/v1",
+    "api.kluster.ai/v1",
     "app.empower.dev/api/v1",
     "https://api.friendli.ai/serverless/v1",
     "api.sambanova.ai/v1",
@@ -228,6 +231,7 @@ openai_compatible_providers: List = [
     "xinference",
     "xai",
     "together_ai",
+    "klusterai",
     "fireworks_ai",
     "empower",
     "friendliai",
@@ -382,6 +386,19 @@ together_ai_models: List = [
     "WizardLM/WizardLM-70B-V1.0",
 ]  # supports all together ai models, just pass in the model id e.g. completion(model="together_computer/replit_code_3b",...)
 
+
+klusterai_models: List = [
+    "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+    "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+    "klusterai/Meta-Llama-3.3-70B-Instruct-Turbo",
+    "klusterai/Meta-Llama-3.1-405B-Instruct-Turbo",
+    "klusterai/Meta-Llama-3.1-8B-Instruct-Turbo",
+    "deepseek-ai/DeepSeek-R1",
+    "deepseek-ai/DeepSeek-V3",
+    "deepseek-ai/DeepSeek-V3-0324",
+    "google/gemma-3-27b-it",
+    "Qwen/Qwen2.5-VL-7B-Instruct",
+]
 
 baseten_models: List = [
     "qvv0xeq",

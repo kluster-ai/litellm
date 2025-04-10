@@ -140,6 +140,9 @@ def get_supported_openai_params(  # noqa: PLR0915
             return litellm.JinaAIEmbeddingConfig().get_supported_openai_params()
     elif custom_llm_provider == "together_ai":
         return litellm.TogetherAIConfig().get_supported_openai_params(model=model)
+    elif custom_llm_provider == "klusterai":
+        if request_type == "chat_completion":
+            return litellm.KlusterAIConfig().get_supported_openai_params(model=model)
     elif custom_llm_provider == "databricks":
         if request_type == "chat_completion":
             return litellm.DatabricksConfig().get_supported_openai_params(model=model)

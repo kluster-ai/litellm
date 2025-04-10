@@ -39,6 +39,7 @@ from litellm.llms.fireworks_ai.cost_calculator import (
     cost_per_token as fireworks_ai_cost_per_token,
 )
 from litellm.llms.gemini.cost_calculator import cost_per_token as gemini_cost_per_token
+from litellm.llms.klusterai.cost_calculator import cost_per_token as klusterai_cost_per_token
 from litellm.llms.openai.cost_calculation import (
     cost_per_second as openai_cost_per_second,
 )
@@ -307,6 +308,8 @@ def cost_per_token(  # noqa: PLR0915
         )
     elif custom_llm_provider == "gemini":
         return gemini_cost_per_token(model=model, usage=usage_block)
+    elif custom_llm_provider == "klusterai":
+        return klusterai_cost_per_token(model=model, usage=usage_block)
     elif custom_llm_provider == "deepseek":
         return deepseek_cost_per_token(model=model, usage=usage_block)
     else:
@@ -539,7 +542,6 @@ def _infer_call_type(
         return "text_completion"
 
     return call_type
-
 
 def completion_cost(  # noqa: PLR0915
     completion_response=None,
@@ -841,27 +843,34 @@ def completion_cost(  # noqa: PLR0915
                             text=completion_string
                         )
 
-                (
-                    prompt_tokens_cost_usd_dollar,
-                    completion_tokens_cost_usd_dollar,
-                ) = cost_per_token(
-                    model=model,
-                    prompt_tokens=prompt_tokens,
-                    completion_tokens=completion_tokens,
-                    custom_llm_provider=custom_llm_provider,
-                    response_time_ms=total_time,
-                    region_name=region_name,
-                    custom_cost_per_second=custom_cost_per_second,
-                    custom_cost_per_token=custom_cost_per_token,
-                    prompt_characters=prompt_characters,
-                    completion_characters=completion_characters,
-                    cache_creation_input_tokens=cache_creation_input_tokens,
-                    cache_read_input_tokens=cache_read_input_tokens,
-                    usage_object=cost_per_token_usage_object,
-                    call_type=cast(CallTypesLiteral, call_type),
-                    audio_transcription_file_duration=audio_transcription_file_duration,
-                    rerank_billed_units=rerank_billed_units,
-                )
+                # Handle klusterai cost calculation like other providers
+                if custom_llm_provider == "klusterai":
+                    (
+                        prompt_tokens_cost_usd_dollar,
+                        completion_tokens_cost_usd_dollar,
+                    ) = klusterai_cost_per_token(model=model, usage=cost_per_token_usage_object)
+                else:
+                    (
+                        prompt_tokens_cost_usd_dollar,
+                        completion_tokens_cost_usd_dollar,
+                    ) = cost_per_token(
+                        model=model,
+                        prompt_tokens=prompt_tokens,
+                        completion_tokens=completion_tokens,
+                        custom_llm_provider=custom_llm_provider,
+                        response_time_ms=total_time,
+                        region_name=region_name,
+                        custom_cost_per_second=custom_cost_per_second,
+                        custom_cost_per_token=custom_cost_per_token,
+                        prompt_characters=prompt_characters,
+                        completion_characters=completion_characters,
+                        cache_creation_input_tokens=cache_creation_input_tokens,
+                        cache_read_input_tokens=cache_read_input_tokens,
+                        usage_object=cost_per_token_usage_object,
+                        call_type=cast(CallTypesLiteral, call_type),
+                        audio_transcription_file_duration=audio_transcription_file_duration,
+                        rerank_billed_units=rerank_billed_units,
+                    )
                 _final_cost = (
                     prompt_tokens_cost_usd_dollar + completion_tokens_cost_usd_dollar
                 )
